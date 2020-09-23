@@ -7,7 +7,7 @@ OS X & Linux:
 ```
 # cd to your repos dir
 git clone https://github.com/j3ygithub/universetech-lotterydraw
-cd universetech-repo
+cd universetech-lotterydraw
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -18,9 +18,9 @@ Windows:
 ```
 # cd to your repos dir
 git clone https://github.com/j3ygithub/universetech-lotterydraw
-cd universetech-repo
+cd universetech-lotterydraw
 python3 -m venv .venv
-source .venv\Scripts\activate
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
