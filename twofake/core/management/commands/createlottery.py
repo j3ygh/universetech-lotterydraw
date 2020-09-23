@@ -37,7 +37,7 @@ class Command(BaseCommand):
                 if Lottery.objects.filter(gid=gid, gamekey=gamekey).exists():
                     print(f'gid={gid} gamekey={gamekey}has been created. Maybe what you want is python manage.py updatedraw?')
                 else:
-                    award = GAMEKEY_DRAWS[gamekey](gid)
+                    award = GAMEKEY_DRAWS[GAMEKEY_NICKNAMES[gamekey]](gid)
                     Lottery.objects.create(
                         gid=gid,
                         gamekey=GAMEKEY_NICKNAMES[gamekey],
