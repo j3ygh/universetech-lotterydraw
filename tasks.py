@@ -1,63 +1,94 @@
 from invoke import task
 from pathlib import Path
 import platform
-import shutil
+import json
 
 
+REPO_ROOT = Path(__file__).parent
 OS = platform.system().lower()
-BASE_DIR = Path(__file__).parent
-PYTHON_VENV_DIR_NAME = '.venv'
-PATHON_PATHS = {
-    'windows': BASE_DIR / PYTHON_VENV_DIR_NAME / 'Scripts' / 'python.exe',
-    'linux': BASE_DIR / PYTHON_VENV_DIR_NAME / 'bin' / 'python',
-    'darwin': BASE_DIR / PYTHON_VENV_DIR_NAME / 'bin' / 'python',
+VENV_DIRNAME = Path('.venv')
+PATHONPATHS = {
+    'windows': VENV_DIRNAME / 'Scripts' / 'python.exe',
+    'linux': VENV_DIRNAME / 'bin' / 'python',
+    'darwin': VENV_DIRNAME / 'bin' / 'python',
+}
+VSCODE_SETTINGS = {
+    "python.pythonPath": str(PATHONPATHS[OS]),
+    "python.linting.enabled": True,
+    "python.linting.pylintEnabled": False,
+    "python.linting.flake8Enabled": True,
+    "python.linting.flake8Args": ["--max-line-length=160"],
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": ["--max-line-length=160"]
 }
 
 
+# VSCode
+
 @task
-def d4vscode(c):
-    file1 = BASE_DIR / '.vscode' / 'd4settings.json'
-    file2 = BASE_DIR / '.vscode' / 'settings.json'
-    shutil.copy(file1, file2)
+def vscode(c):
+    s = json.dumps(VSCODE_SETTINGS, indent=4)
+    with open(REPO_ROOT / '.vscode' / 'settings.json', 'w', encoding='utf-8') as f:
+        f.write(s)
+    print('Done!')
+
+
+# Django
+
+@task
+def migrate(c, docs=False):
+    commands = [
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} makemigrations',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} migrate',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} makemigrations',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} migrate',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} makemigrations',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} migrate',
+    ]
+    for command in commands:
+        c.run(command)
 
 
 @task
 def createdata(c, docs=False):
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "onefake" / "manage.py"} makemigrations')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "onefake" / "manage.py"} migrate')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "onefake" / "manage.py"} createlottery')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "twofake" / "manage.py"} makemigrations')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "twofake" / "manage.py"} migrate')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "twofake" / "manage.py"} createlottery')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "lotterydraw" / "manage.py"} makemigrations')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "lotterydraw" / "manage.py"} migrate')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "lotterydraw" / "manage.py"} createlottery')
+    commands = [
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} createdata',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} createdata',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} createdata',
+    ]
+    for command in commands:
+        c.run(command)
 
 
 @task
 def deletedata(c, docs=False):
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "onefake" / "manage.py"} makemigrations')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "onefake" / "manage.py"} migrate')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "onefake" / "manage.py"} deletelottery')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "twofake" / "manage.py"} makemigrations')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "twofake" / "manage.py"} migrate')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "twofake" / "manage.py"} deletelottery')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "lotterydraw" / "manage.py"} makemigrations')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "lotterydraw" / "manage.py"} migrate')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "lotterydraw" / "manage.py"} deletelottery')
+    commands = [
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} deletelottery',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} deletelottery',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} deletelottery',
+    ]
+    for command in commands:
+        c.run(command)
 
 
 @task
-def demo(c, docs=False):
-    c1 = f'{PATHON_PATHS[OS]} {BASE_DIR / "onefake" / "manage.py"} runserver 8001'
-    c2 = f'{PATHON_PATHS[OS]} {BASE_DIR / "twofake" / "manage.py"} runserver 8002'
-    c3 = f'{PATHON_PATHS[OS]} {BASE_DIR / "lotterydraw" / "manage.py"} runserver 8000'
-    command = ' & '.join([c1, c2, c3])
-    c.run(command)
+def runserver(c, docs=False):
+    commands = [
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} runserver 8001',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} runserver 8002',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} runserver 8000',
+    ]
+    merged_sign = ' && ' if OS == 'windows' else ' & '
+    merged_command = merged_sign.join(commands)
+    c.run(merged_command)
 
 
 @task
 def updatedata(c, docs=False):
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "onefake" / "manage.py"} updatelottery')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "twofake" / "manage.py"} updatelottery')
-    c.run(f'{PATHON_PATHS[OS]} {BASE_DIR / "lotterydraw" / "manage.py"} updatelottery')
+    commands = [
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} updatelottery',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} updatelottery',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} updatelottery',
+    ]
+    for command in commands:
+        c.run(command)
