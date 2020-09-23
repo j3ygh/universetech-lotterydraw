@@ -47,17 +47,19 @@ def migrate(c, docs=False):
     ]
     for command in commands:
         c.run(command)
+    print('Done!')
 
 
 @task
 def createdata(c, docs=False):
     commands = [
-        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} createdata',
-        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} createdata',
-        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} createdata',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} createlottery',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} createlottery',
+        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} createlottery',
     ]
     for command in commands:
         c.run(command)
+    print('Done!')
 
 
 @task
@@ -69,6 +71,7 @@ def deletedata(c, docs=False):
     ]
     for command in commands:
         c.run(command)
+    print('Done!')
 
 
 @task
@@ -92,3 +95,4 @@ def updatedata(c, docs=False):
     ]
     for command in commands:
         c.run(command)
+    print('Done!')
