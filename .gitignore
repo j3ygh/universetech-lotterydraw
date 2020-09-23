@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Mac things
+.DS_Store
+
+# Python
+/.venv/
+
+# Django things
+db.sqlite3
+**/migrations/*
+!**/migrations/__init__.py
+
+# Static & media
+/static/
+/media/
+
+# Credential things
+/secrets/
+
+# Deployment things
+/nginx/
+/uwsgi/
+web.config
+
+# VSCode things
+.vscode/settings.json
