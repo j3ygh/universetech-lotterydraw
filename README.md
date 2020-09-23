@@ -19,9 +19,36 @@ Windows:
 # cd to your repos dir
 git clone https://github.com/j3ygithub/universetech-lotterydraw
 cd universetech-lotterydraw
-python3 -m venv .venv
+python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+Initialization
+```
+# cd to the repo root
+python onefake/manage.py makemigrations
+python onefake/manage.py migrate
+python onefake/manage.py createlottery
+python onefake/manage.py runserver
+
+python twofake/manage.py makemigrations
+python twofake/manage.py migrate
+python twofake/manage.py createlottery
+python twofake/manage.py runserver
+
+python lotterydraw/manage.py makemigrations
+python lotterydraw/manage.py migrate
+python lotterydraw/manage.py createlottery
+python lotterydraw/manage.py runserver
+```
+
+Update Data
+```
+# cd to the repo root
+python onefake/manage.py updatelottery
+python twofake/manage.py updatelottery
+python lotterydraw/manage.py updatelottery
 ```
 
 ## Meta
