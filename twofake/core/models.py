@@ -10,7 +10,7 @@ GAMEKEY_NICKNAMES = {
 }
 GAMEKEY_DRAWS = {
     'cqssc': cqssc_draw,
-    'bj11x5': bjsyxw_draw,
+    'bjsyxw': bjsyxw_draw,
 }
 
 
