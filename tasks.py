@@ -1,5 +1,6 @@
 from invoke import task
 from pathlib import Path
+import os
 import platform
 import json
 
@@ -21,6 +22,11 @@ VSCODE_SETTINGS = {
     "python.formatting.provider": "autopep8",
     "python.formatting.autopep8Args": ["--max-line-length=160"]
 }
+PATHONPATHS_ABS = {
+    'windows': REPO_ROOT / VENV_DIRNAME / 'Scripts' / 'python.exe',
+    'linux': REPO_ROOT / VENV_DIRNAME / 'bin' / 'python',
+    'darwin': REPO_ROOT / VENV_DIRNAME / 'bin' / 'python',
+}
 
 
 # VSCode
@@ -28,6 +34,10 @@ VSCODE_SETTINGS = {
 @task
 def vscode(c):
     s = json.dumps(VSCODE_SETTINGS, indent=4)
+    try:
+        os.mkdir(REPO_ROOT / '.vscode')
+    except FileExistsError:
+        pass
     with open(REPO_ROOT / '.vscode' / 'settings.json', 'w', encoding='utf-8') as f:
         f.write(s)
     print('Done!')
@@ -77,12 +87,11 @@ def deletedata(c, docs=False):
 @task
 def runserver(c, docs=False):
     commands = [
-        f'{PATHONPATHS[OS]} {REPO_ROOT / "onefake" / "manage.py"} runserver 8001',
-        f'{PATHONPATHS[OS]} {REPO_ROOT / "twofake" / "manage.py"} runserver 8002',
-        f'{PATHONPATHS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} runserver 8000',
+        f'{PATHONPATHS_ABS[OS]} {REPO_ROOT / "onefake" / "manage.py"} runserver 8001',
+        f'{PATHONPATHS_ABS[OS]} {REPO_ROOT / "twofake" / "manage.py"} runserver 8002',
+        f'{PATHONPATHS_ABS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} runserver 8000',
     ]
-    merged_sign = ' && ' if OS == 'windows' else ' & '
-    merged_command = merged_sign.join(commands)
+    merged_command = ' & '.join(commands)
     c.run(merged_command)
 
 
