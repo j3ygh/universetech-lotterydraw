@@ -49,7 +49,7 @@ def get_winning_number_origin_2(game_id, issue, url='http://127.0.0.1:8002/newly
         2: 'bj11x5',
     }
     params = {
-        'cide': gamekey_mapping[game_id],
+        'code': gamekey_mapping[game_id],
     }
     r = requests.get(url, params=params, timeout=timeout)
     data = r.json()['data']
