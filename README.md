@@ -52,12 +52,12 @@ python twofake/manage.py runserver 8000
 ```
 > You may need to run it on different cmd if you're on a windows OS. 
 
-Then you could browse
+Then you could go to
 ```
 http://127.0.0.1:8000/demo
 ```
 
-and you can test its create, update, delete features or use invoke commands on terminal like:
+and update data with invoke command or do it on browser.
 ```
 invoke updatedata
 ```
