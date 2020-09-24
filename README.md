@@ -1,5 +1,11 @@
 # universetech-lotterydraw
 
+A backend implement with lottery draw as topic based on calling other web API.
+
+<p float="left">
+  <img src="https://https://github.com/j3ygithub/universetech-lotterydraw/blob/master/docs/images/demo.jpg" width="20%">
+</p>
+
 ## Installation
 
 This requires python 3.7.7 or higher.
