@@ -1,6 +1,6 @@
 # universetech-lotterydraw
 
-**<a href="http://35.234.20.231:8000/demo/">LIVE DEMO</a>**
+**[LIVE DEMO](http://35.234.20.231:8000/demo/)**
 
 A backend implement with lottery draw as topic based on calling other web API.
 
