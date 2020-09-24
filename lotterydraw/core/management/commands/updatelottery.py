@@ -1,35 +1,9 @@
 import requests
 from django.core.management.base import BaseCommand
 from core.models import Lottery
-import copy
 
 
-# class WinnginNumberDrawer():
-
-#     def __init__(self, lottery):
-#         self.lottery = lottery
-
-#     def get_winning_number(self):
-#         winning_number = 0
-#         # Do some requests to vendor API.
-#         return winning_number
-
-
-# class UpdateWinningNumberJob():
-
-#     def __init__(self, lottery):
-#         self.lottery = lottery
-
-#     def handle(self):
-#         try:
-#             target = WinnginNumberDrawer(lottery=self.lottery)
-#             self.lottery.winning_number = target.get_winning_number()
-#             self.lottery.save()
-#         except Exception as e:
-#             print(f'Something went wrong: {e}')
-
-
-def get_winning_number_origin_1(game_id, issue, url='http://127.0.0.1:8001/v1/', timeout=30):
+def origin_1(game_id, issue, url='http://127.0.0.1:8001/v1/', timeout=30):
     gamekey_mapping = {
         1: 'ssc',
         2: 'bjsyxw',
@@ -43,7 +17,7 @@ def get_winning_number_origin_1(game_id, issue, url='http://127.0.0.1:8001/v1/',
     return winning_number
 
 
-def get_winning_number_origin_2(game_id, issue, url='http://127.0.0.1:8002/newly.do/', timeout=30):
+def origin_2(game_id, issue, url='http://127.0.0.1:8002/newly.do/', timeout=30):
     gamekey_mapping = {
         1: 'cqssc',
         2: 'bj11x5',
@@ -58,11 +32,27 @@ def get_winning_number_origin_2(game_id, issue, url='http://127.0.0.1:8002/newly
             return d['opencode']
 
 
-ALL_ORIGINS = [get_winning_number_origin_1, get_winning_number_origin_2]
-PRIMARY_ORIGINS = {
-    1: get_winning_number_origin_1,
-    2: get_winning_number_origin_2,
-}
+class LotteryManager():
+    ALL_ORIGINS = [origin_1, origin_2]
+    PRIMARY_ORIGINS = {
+        1: origin_1,
+        2: origin_2,
+    }
+
+    def __init__(self, lottery):
+        self.lottery = lottery
+
+    def get_winning_number(self):
+        game_id = self.lottery.game_id
+        issue = self.lottery.issue
+        primary_origin = self.PRIMARY_ORIGINS[game_id]
+        other_origins = [origin for origin in self.ALL_ORIGINS if origin != primary_origin]
+        primary_winning_number = primary_origin(game_id=game_id, issue=issue)
+        for origin in other_origins:
+            other_winning_number = origin(game_id=game_id, issue=issue)
+            if primary_winning_number == other_winning_number:
+                return primary_winning_number
+        return ''
 
 
 class Command(BaseCommand):
@@ -70,15 +60,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for lottery in Lottery.objects.all():
-            game_id = lottery.game_id
-            issue = lottery.issue
-            primary_origin = PRIMARY_ORIGINS[game_id]
-            all_origins_copy = copy.deepcopy(ALL_ORIGINS)
-            all_origins_copy.remove(primary_origin)
-            other_origins = all_origins_copy
-            p = primary_origin(game_id=game_id, issue=issue)
-            for origin in other_origins:
-                po = origin(game_id, issue=issue)
-                if p == po:
-                    lottery.winning_number = p
-                    lottery.save()
+            manager = LotteryManager(lottery=lottery)
+            winning_number = manager.get_winning_number()
+            if winning_number:
+                lottery.winning_number = winning_number
+                lottery.save()
