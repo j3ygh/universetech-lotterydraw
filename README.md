@@ -2,10 +2,13 @@
 
 ## Installation
 
+This requires python 3.7.7 or higher.
+
+First, cd to your repos dir and do the following commands to install all the python packages:
+
 OS X & Linux:
 
 ```
-# cd to your repos dir
 git clone https://github.com/j3ygithub/universetech-lotterydraw
 cd universetech-lotterydraw
 python3 -m venv .venv
@@ -16,7 +19,6 @@ pip install -r requirements.txt
 Windows:
 
 ```
-# cd to your repos dir
 git clone https://github.com/j3ygithub/universetech-lotterydraw
 cd universetech-lotterydraw
 python -m venv .venv
@@ -24,32 +26,34 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Initialization
+Then you can use <a href='https://github.com/pyinvoke/invoke'>invoke</a> to do the following operations:
+
 ```
-# cd to the repo root
-python onefake/manage.py makemigrations
-python onefake/manage.py migrate
-python onefake/manage.py createlottery
-python onefake/manage.py runserver
-
-python twofake/manage.py makemigrations
-python twofake/manage.py migrate
-python twofake/manage.py createlottery
-python twofake/manage.py runserver
-
-python lotterydraw/manage.py makemigrations
-python lotterydraw/manage.py migrate
-python lotterydraw/manage.py createlottery
-python lotterydraw/manage.py runserver
+# initialize DB
+invoke migrate
+# create some fake data in DB for testing
+invoke createdata
+# delete all the data (you can create them again though)
+invoke deletedata
 ```
 
-Update Data
+And to update the data you will need to run the server:
+
 ```
-# cd to the repo root
-python onefake/manage.py updatelottery
-python twofake/manage.py updatelottery
-python lotterydraw/manage.py updatelottery
+# fake server 1 for winning number
+python onefake/manage.py runserver 8001
+# fake server 2 for winning number
+python onefake/manage.py runserver 8002
+# lotterydraw server
+python onefake/manage.py runserver 8000
 ```
+then we can do
+```
+invoke updatedata
+```
+
+For more details, please check https://github.com/j3ygithub/universetech-lotterydraw.
+
 
 ## Meta
 
