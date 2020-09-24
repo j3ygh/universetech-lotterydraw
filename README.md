@@ -51,30 +51,21 @@ delete all the data (you can create them again though)
 invoke deletedata
 ```
 
-And to update the data you will need to run the server:
+And to update the data you will need to run the servers:
 
-Run fake server 1
 ```
-python onefake/manage.py runserver 8001
-```
-
-Run fake server2
-```
-python twofake/manage.py runserver 8002
-```
-
-Run lottery draw server
-```
+python onefake/manage.py runserver 8001 &
+python twofake/manage.py runserver 8002 &
 python twofake/manage.py runserver 8000
 ```
+> You may need to run it on different cmd if you're on a windows OS. 
 
 Then you could browse
 ```
 http://127.0.0.1:8000/demo
 ```
 
-
-then we can do
+and you can test its create, update, delete features or use invoke commands on terminal like:
 ```
 invoke updatedata
 ```
