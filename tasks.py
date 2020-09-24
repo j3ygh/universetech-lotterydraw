@@ -24,8 +24,8 @@ VSCODE_SETTINGS = {
 }
 PATHONPATHS_ABS = {
     'windows': REPO_ROOT / VENV_DIRNAME / 'Scripts' / 'python.exe',
-    'linux': REPO_ROOT / VENV_DIRNAME / 'bin' / 'python',
-    'darwin': REPO_ROOT / VENV_DIRNAME / 'bin' / 'python',
+    'linux': REPO_ROOT.resolve() / VENV_DIRNAME / 'bin' / 'python',
+    'darwin': REPO_ROOT.resolve() / VENV_DIRNAME / 'bin' / 'python',
 }
 
 
@@ -84,16 +84,7 @@ def deletedata(c, docs=False):
     print('Done!')
 
 
-@task
-def runserver(c, docs=False):
-    commands = [
-        f'{PATHONPATHS_ABS[OS]} {REPO_ROOT / "onefake" / "manage.py"} runserver 8001',
-        f'{PATHONPATHS_ABS[OS]} {REPO_ROOT / "twofake" / "manage.py"} runserver 8002',
-        f'{PATHONPATHS_ABS[OS]} {REPO_ROOT / "lotterydraw" / "manage.py"} runserver 8000',
-    ]
-    merged_command = ' & '.join(commands)
-    c.run(merged_command)
-
+# Should be run when all the servers are running.
 
 @task
 def updatedata(c, docs=False):
