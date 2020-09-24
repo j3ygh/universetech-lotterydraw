@@ -3,7 +3,7 @@
 A backend implement with lottery draw as topic based on calling other web API.
 
 <p float="left">
-  <img src="https://github.com/j3ygithub/universetech-lotterydraw/blob/master/docs/images/sc1.jpg" width="55%">
+  <img src="https://github.com/j3ygithub/universetech-lotterydraw/blob/master/docs/images/sc1.jpg" width="50%">
 </p>
 
 ## Installation
