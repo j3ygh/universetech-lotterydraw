@@ -80,8 +80,5 @@ class Command(BaseCommand):
             for origin in other_origins:
                 po = origin(game_id, issue=issue)
                 if p == po:
-                    print(p, po)
                     lottery.winning_number = p
                     lottery.save()
-                else:
-                    print(p, po)

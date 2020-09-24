@@ -1,5 +1,8 @@
 from django.http import JsonResponse
 from .models import Lottery
+from django.urls import reverse
+from django.shortcuts import redirect
+from django.core.management import call_command
 
 
 def index(request):
@@ -29,6 +32,15 @@ def index(request):
         ]
     }
     """
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'create':
+            call_command('createlottery')
+        elif action == 'update':
+            call_command('updatelottery')
+        elif action == 'delete':
+            call_command('deletelottery')
+        return redirect(reverse('index'))
     objs = Lottery.objects.all()
     gamekey = request.GET.get('code')
     if gamekey:

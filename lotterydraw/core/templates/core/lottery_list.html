@@ -47,6 +47,16 @@
             </div>
             <div class="col-auto">
                 <h1><a href="http://127.0.0.1:8001/v1/">Onefake</a></h1>
+                <form action="http://127.0.0.1:8001/v1/" method="post">
+                    {% csrf_token %}
+                    <select name="action">
+                        <option value="">Action</option>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                    <button type="submit">submit</button>
+                </form>
                 <table class="table table-sm table-bordered border-secondary">
                     <tr>
                         <th>Gamekey</th>
@@ -64,6 +74,16 @@
             </div>
             <div class="col-auto">
                 <h1><a href="http://127.0.0.1:8002/newly.do/">Twofake</a></h1>
+                <form action="http://127.0.0.1:8002/newly.do/" method="post">
+                    {% csrf_token %}
+                    <select name="action">
+                        <option value="">Action</option>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                    <button type="submit">submit</button>
+                </form>
                 <table class="table table-sm table-bordered border-secondary">
                     <tr>
                         <th>Code</th>
