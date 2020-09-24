@@ -3,8 +3,10 @@ from .models import Lottery
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.core.management import call_command
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def index(request):
     """
     Example:
