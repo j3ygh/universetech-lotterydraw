@@ -36,18 +36,10 @@ pip install -r requirements.txt
 
 Then you can use <a href='https://github.com/pyinvoke/invoke'>invoke</a> to do the following operations:
 
-initialize DB
+Initialize DB, create some fake data in DB for testing and delete all the data if you want.
 ```
 invoke migrate
-```
-
-create some fake data in DB for testing
-```
 invoke createdata
-```
-
-delete all the data (you can create them again though)
-```
 invoke deletedata
 ```
 
