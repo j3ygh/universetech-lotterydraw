@@ -46,8 +46,8 @@
                 </table>
             </div>
             <div class="col-auto">
-                <h1><a href="http://127.0.0.1:8001/v1/">Onefake</a></h1>
-                <form action="http://127.0.0.1:8001/v1/" method="post">
+                <h1><a href="{{ request.scheme }}://{{ host1 }}/v1/">Onefake</a></h1>
+                <form action="{{ request.scheme }}://{{ host1 }}/v1/" method="post">
                     {% csrf_token %}
                     <select name="action">
                         <option value="">Action</option>

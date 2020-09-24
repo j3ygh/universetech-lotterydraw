@@ -47,9 +47,12 @@ def demo(request):
     url2 = 'http://127.0.0.1:8002/newly.do/'
     r2 = requests.get(url2)
     results2 = r2.json()
+    host = request.get_host().split(':')[0]
     context = {
         'results': results,
         'results1': results1,
         'results2': results2,
+        'host1': host + ':8001',
+        'host2': host + ':8002',
     }
     return render(request, 'core/lottery_list.html', context)
