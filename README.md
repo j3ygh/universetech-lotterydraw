@@ -1,6 +1,6 @@
 # universetech-lotterydraw
 
-**[LIVE DEMO](http://35.234.20.231:8000/demo/)**
+<h3><a href="http://35.234.20.231:8000/demo/">LIVE DEMO</a></h3>
 
 A backend implement with lottery draw as topic based on calling other web API.
 
@@ -36,25 +36,44 @@ pip install -r requirements.txt
 
 Then you can use <a href='https://github.com/pyinvoke/invoke'>invoke</a> to do the following operations:
 
+initialize DB
 ```
-# initialize DB
 invoke migrate
-# create some fake data in DB for testing
+```
+
+create some fake data in DB for testing
+```
 invoke createdata
-# delete all the data (you can create them again though)
+```
+
+delete all the data (you can create them again though)
+```
 invoke deletedata
 ```
 
 And to update the data you will need to run the server:
 
+Run fake server 1
 ```
-# fake server 1 for winning number
 python onefake/manage.py runserver 8001
-# fake server 2 for winning number
-python onefake/manage.py runserver 8002
-# lotterydraw server
-python onefake/manage.py runserver 8000
 ```
+
+Run fake server2
+```
+python twofake/manage.py runserver 8002
+```
+
+Run lottery draw server
+```
+python twofake/manage.py runserver 8000
+```
+
+Then you could browse
+```
+http://127.0.0.1:8000/demo
+```
+
+
 then we can do
 ```
 invoke updatedata
