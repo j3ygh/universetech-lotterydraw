@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>Lotteris</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="row text-center" style="min-height: 80px;">
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <h1><a class="text-none-decoration" href="{% url 'lottery_list' %}">Lotteries</a></h1>
+                <form action="{% url 'demo' %}" method="post">
+                    {% csrf_token %}
+                    <select name="action">
+                        <option value="">Action</option>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                    <button type="submit">submit</button>
+                </form>
+                <table class="table table-sm table-bordered border-secondary">
+                    <tr>
+                        <th>Game ID</th>
+                        <th>Issue</th>
+                        <th>Winning number</th>
+                    </tr>
+                    {% for game in results.data %}
+                    <tr>
+                        <td>{{ game.game_id }}</td>
+                        <td>{{ game.issue }}</td>
+                        <td>{{ game.winning_number }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-auto">
+                <h1><a href="http://127.0.0.1:8001/v1/">Onefake</a></h1>
+                <table class="table table-sm table-bordered border-secondary">
+                    <tr>
+                        <th>Gamekey</th>
+                        <th>Issue</th>
+                        <th>Award</th>
+                    </tr>
+                    {% for game in results1.data %}
+                    <tr>
+                        <td>{{ game.gamekey }}</td>
+                        <td>{{ game.issue }}</td>
+                        <td>{{ game.award }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-auto">
+                <h1><a href="http://127.0.0.1:8002/newly.do/">Twofake</a></h1>
+                <table class="table table-sm table-bordered border-secondary">
+                    <tr>
+                        <th>Code</th>
+                        <th>Expect</th>
+                        <th>Opencode</th>
+                    </tr>
+                    {% for game in results2.data %}
+                    <tr>
+                        <td>{{ game.code }}</td>
+                        <td>{{ game.expect }}</td>
+                        <td>{{ game.opencode }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
