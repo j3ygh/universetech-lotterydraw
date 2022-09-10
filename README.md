@@ -3,7 +3,7 @@
 A backend implement with lottery draw as topic based on calling other web API.
 
 <p float="left">
-  <img src="https://github.com/j3ygh/universetech-lotterydraw/blob/master/docs/images/sc1.jpg" width="50%">
+  <img src="https://github.com/thejimmylin/universetech-lotterydraw/blob/master/docs/images/sc1.jpg" width="50%">
 </p>
 
 ## Installation
@@ -15,7 +15,7 @@ First, cd to your repos dir and do the following commands to install all the pyt
 OS X & Linux:
 
 ```
-git clone https://github.com/j3ygh/universetech-lotterydraw
+git clone https://github.com/thejimmylin/universetech-lotterydraw
 cd universetech-lotterydraw
 python3 -m venv .venv
 source .venv/bin/activate
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 Windows:
 
 ```
-git clone https://github.com/j3ygh/universetech-lotterydraw
+git clone https://github.com/thejimmylin/universetech-lotterydraw
 cd universetech-lotterydraw
 python -m venv .venv
 .venv\Scripts\activate
@@ -60,7 +60,7 @@ and update data with invoke command or do it on browser.
 invoke updatedata
 ```
 
-For more details, please check https://github.com/j3ygh/universetech-lotterydraw.
+For more details, please check https://github.com/thejimmylin/universetech-lotterydraw.
 
 
 ## Meta
@@ -69,11 +69,11 @@ Jimmy Lin <b00502013@gmail.com>
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
-[https://github.com/j3ygh/](https://github.com/j3ygh/)
+[https://github.com/thejimmylin/](https://github.com/thejimmylin/)
 
 ## Contributing
 
-1. Fork it (<https://github.com/j3ygh/universetech-lotterydraw/fork>)
+1. Fork it (<https://github.com/thejimmylin/universetech-lotterydraw/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
